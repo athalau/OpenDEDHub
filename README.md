@@ -26,6 +26,8 @@ See [DEDWatchdog](https://github.com/athalau/DEDWatchdog/) for details.
 - **Runtime / SDK:** [.NET 10.0 SDK](https://microsoft.com) (to build from source) or .NET 10.0 Desktop Runtime (if running a framework-dependent binary).
 - **Shared Memory Library:** `F4SharedMem.dll` (copy this from your existing Simgears DED Hub installation folder, typically `C:\Program Files (x86)\SimGears\DEDHub\F4SharedMem.dll`).
 
+The device ID is currently hardcoded in `UsbPortResetter.cs` as `TargetVidPid`. My device ID is `VID_2E8A&PID_000A`. Change the value accordingly. You can find your specific device ID in the Windows Device Manager > right click Simgears DED > Properties > Property: "Hardware Ids".
+
 ---
 
 ## Building from Source
@@ -65,7 +67,7 @@ See [DEDWatchdog](https://github.com/athalau/DEDWatchdog/) for details.
 - `Program.cs` — Application entry point, main telemetry loop, and keyboard listener.
 - `DedController.cs` — COM port discovery, Falcon BMS shared-memory polling, DCS multicast UDP listener, and thread-safe recovery state machine.
 - `Protocol.cs` — Simgears wire protocol (`115200` 8N1), command framing (`#|I`, `#|W`, `#|B`, `#|D`, `#|d`), and custom OLED glyph/inverse-character encoder.
-- `UsbPortResetter.cs` — Native Win32 P/Invoke wrapper (`setupapi.dll` & `cfgmgr32.dll`) for resetting `VID_2E8A&PID_000A`.
+- `UsbPortResetter.cs` — Native Win32 P/Invoke wrapper (`setupapi.dll` & `cfgmgr32.dll`) for resetting the device with the ID configured in `UsbPortResetter.cs`.
 - `OperationMode.cs` — Operating state definitions (`WAIT`, `BMS`, `DCS`).
 - `app.manifest` — Requests `requireAdministrator` execution level so USB resets execute without mid-flight UAC interruptions.
 
