@@ -1,0 +1,14 @@
+# Build outputs
+bin/
+obj/
+publish/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Third-party binaries (users supply their own copy)
+*.dll
