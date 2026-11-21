@@ -1,6 +1,7 @@
 # OpenDEDHub
 
 A lightweight, open-source, self-healing replacement for the official **Simgears F16 DED Hub** software, built in C# (.NET 10 LTS) for **Falcon BMS** (with **DCS World** multicast pass-through support).
+You'll need a [Simgears F16 DED](https://www.simgears.com/products/f16-ded-data-entry-display/) for this to work.
 
 ## Why OpenDEDHub?
 
