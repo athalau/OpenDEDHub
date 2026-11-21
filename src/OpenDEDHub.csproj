@@ -17,7 +17,7 @@
   <ItemGroup>
     <Reference Include="F4SharedMem">
       <HintPath>.\F4SharedMem.dll</HintPath>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <ExcludeFromSingleFile>false</ExcludeFromSingleFile>
     </Reference>
   </ItemGroup>
 </Project>
