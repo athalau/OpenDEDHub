@@ -25,16 +25,15 @@ See [DEDWatchdog](https://github.com/athalau/DEDWatchdog/) for details.
 
 - **OS:** Windows 10 or Windows 11 (x64)
 - **Runtime / SDK:** [.NET 10.0 SDK](https://microsoft.com) (to build from source) or .NET 10.0 Desktop Runtime (if running a framework-dependent binary).
-- **Shared Memory Library:** `F4SharedMem.dll` (copy this from your existing Simgears DED Hub installation folder, typically `C:\Program Files (x86)\SimGears\DEDHub\F4SharedMem.dll`).
+- **Shared Memory Library:** to build from source `F4SharedMem.dll` is needed. The one shipped with FalconBMS will not work. Copy this from your existing Simgears DED Hub installation folder, typically `C:\Program Files (x86)\SimGears\DEDHub\F4SharedMem.dll`. It is included in prebuilt binary releases >= v1.0.1 at compile time, hence no copy is needed.
 
 ## Quick Start (Prebuilt Release)
 
 If you don't want to compile from source, you can download a prebuilt binary from the [Releases](https://github.com) page:
 
 1. Download and extract the latest release archive to a folder of your choice.
-2. Copy `F4SharedMem.dll` from your existing Simgears DED Hub installation folder (typically `C:\Program Files (x86)\SimGears\DEDHub\F4SharedMem.dll`) into the same folder as `OpenDEDHub.exe`.
-3. *(If using the framework-dependent build)* Make sure the **.NET 10.0 Desktop Runtime (x64)** is installed on your system. The standalone (`-standalone`) build requires no additional runtime.
-4. Run `OpenDEDHub.exe` (see [Usage](#usage) below).
+2. *(If using the framework-dependent build)* Make sure the **.NET 10.0 Desktop Runtime (x64)** is installed on your system. The standalone (`-standalone`) build requires no additional runtime.
+3. Run `OpenDEDHub.exe` (see [Usage](#usage) below).
 
 ---
 
@@ -60,9 +59,8 @@ If you don't want to compile from source, you can download a prebuilt binary fro
 ## Usage
 
 1. Make sure the official Simgears **DEDHub** is closed.
-2. Place `F4SharedMem.dll` in the same directory as `OpenDEDHub.exe` (if not already copied during build).
-3. Launch **`OpenDEDHub.exe`** (accept the UAC prompt—Administrator privileges are required by Windows to cycle USB device nodes via SetupAPI).
-4. Launch **Falcon BMS** (or **DCS World**). `OpenDEDHub` will automatically detect the simulator, switch the DED into the appropriate mode, and begin streaming cockpit telemetry.
+2. Launch **`OpenDEDHub.exe`** (accept the UAC prompt—Administrator privileges are required by Windows to cycle USB device nodes via SetupAPI).
+3. Launch **Falcon BMS** (or **DCS World**). `OpenDEDHub` will automatically detect the simulator, switch the DED into the appropriate mode, and begin streaming cockpit telemetry.
 
 ## Configuration (`config.ini`)
 
