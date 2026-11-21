@@ -9,6 +9,12 @@ namespace OpenDEDHub
         static async Task Main(string[] args)
         {
             Console.Title = "OpenDEDHub (Standalone Self-Healing)";
+            
+            ConfigLoader.GetTargetVidPid(Console.WriteLine);
+
+            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            Console.WriteLine($"OpenDEDHub v{version?.ToString(3)}");
+
             Log("OpenDEDHub started.");
             Log("Controls: Press [R] to force-reset USB port | Press [Q] to quit.");
 

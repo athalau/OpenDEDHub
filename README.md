@@ -27,7 +27,14 @@ See [DEDWatchdog](https://github.com/athalau/DEDWatchdog/) for details.
 - **Runtime / SDK:** [.NET 10.0 SDK](https://microsoft.com) (to build from source) or .NET 10.0 Desktop Runtime (if running a framework-dependent binary).
 - **Shared Memory Library:** `F4SharedMem.dll` (copy this from your existing Simgears DED Hub installation folder, typically `C:\Program Files (x86)\SimGears\DEDHub\F4SharedMem.dll`).
 
-The device ID is currently hardcoded in `UsbPortResetter.cs` as `TargetVidPid`. My device ID is `VID_2E8A&PID_000A`. Change the value accordingly. You can find your specific device ID in the Windows Device Manager > right click Simgears DED > Properties > Property: "Hardware Ids".
+## Quick Start (Prebuilt Release)
+
+If you don't want to compile from source, you can download a prebuilt binary from the [Releases](https://github.com) page:
+
+1. Download and extract the latest release archive to a folder of your choice.
+2. Copy `F4SharedMem.dll` from your existing Simgears DED Hub installation folder (typically `C:\Program Files (x86)\SimGears\DEDHub\F4SharedMem.dll`) into the same folder as `OpenDEDHub.exe`.
+3. *(If using the framework-dependent build)* Make sure the **.NET 10.0 Desktop Runtime (x64)** is installed on your system. The standalone (`-standalone`) build requires no additional runtime.
+4. Run `OpenDEDHub.exe` (see [Usage](#usage) below).
 
 ---
 
@@ -57,6 +64,20 @@ The device ID is currently hardcoded in `UsbPortResetter.cs` as `TargetVidPid`. 
 3. Launch **`OpenDEDHub.exe`** (accept the UAC prompt—Administrator privileges are required by Windows to cycle USB device nodes via SetupAPI).
 4. Launch **Falcon BMS** (or **DCS World**). `OpenDEDHub` will automatically detect the simulator, switch the DED into the appropriate mode, and begin streaming cockpit telemetry.
 
+## Configuration (`config.ini`)
+
+On first launch (or first USB reset), **OpenDEDHub** automatically generates a `config.ini` file in the same directory as `OpenDEDHub.exe` if one does not already exist.
+
+```ini
+; OpenDEDHub Configuration
+; Find your Hardware ID in Windows Device Manager -> Simgears DED -> Properties -> Details -> Hardware Ids
+[USB]
+TargetVidPid=VID_2E8A&PID_000A
+```
+
+* **`TargetVidPid`** — The USB Vendor ID and Product ID used by the self-healing resetter to locate and power-cycle your Simgears DED on the USB bus. Defaults to `VID_2E8A&PID_000A` (Raspberry Pi Pico CDC).
+* **Finding your ID:** If your hardware revision uses a different ID, open **Windows Device Manager**, right-click your **Simgears DED** device, select **Properties > Details**, choose **Hardware Ids** from the dropdown, and update `TargetVidPid` accordingly. Changes take effect on the next reset without needing to recompile.
+
 ### Console Controls
 - **`R`** — Force an immediate USB port reset and COM port re-discovery (useful if the Pico display ever freezes silently without throwing a serial error).
 - **`Q`** (or `Ctrl+C`) — Return the DED to Wait/Idle mode (`#|W`) and exit cleanly.
@@ -70,6 +91,7 @@ The device ID is currently hardcoded in `UsbPortResetter.cs` as `TargetVidPid`. 
 - `Protocol.cs` — Simgears wire protocol (`115200` 8N1), command framing (`#|I`, `#|W`, `#|B`, `#|D`, `#|d`), and custom OLED glyph/inverse-character encoder.
 - `UsbPortResetter.cs` — Native Win32 P/Invoke wrapper (`setupapi.dll` & `cfgmgr32.dll`) for resetting the device with the ID configured in `UsbPortResetter.cs`.
 - `OperationMode.cs` — Operating state definitions (`WAIT`, `BMS`, `DCS`).
+- `ConfigLoader.cs` — Creates and parses `config.ini` for user-configurable USB hardware IDs.
 - `app.manifest` — Requests `requireAdministrator` execution level so USB resets execute without mid-flight UAC interruptions.
 
 ---

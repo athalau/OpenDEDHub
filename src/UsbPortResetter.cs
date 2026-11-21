@@ -6,7 +6,8 @@ namespace OpenDEDHub
 {
     internal static class UsbPortResetter
     {
-        private const string TargetVidPid = "VID_2E8A&PID_000A"; // Raspberry Pi Pico CDC
+        //private const string TargetVidPid = "VID_2E8A&PID_000A"; // Raspberry Pi Pico CDC
+        //private static readonly string TargetVidPid = AppConfig.LoadTargetVidPid();
 
         private const uint DIGCF_PRESENT = 0x00000002;
         private const uint DIGCF_ALLCLASSES = 0x00000004;
@@ -87,6 +88,8 @@ namespace OpenDEDHub
 
         public static bool ResetDedUsbDevice(Action<string> log)
         {
+            string targetVidPid = ConfigLoader.GetTargetVidPid(log);
+
             IntPtr devInfoSet = SetupDiGetClassDevs(IntPtr.Zero, "USB", IntPtr.Zero, DIGCF_PRESENT | DIGCF_ALLCLASSES);
             if (devInfoSet == IntPtr.Zero || devInfoSet == new IntPtr(-1))
             {
@@ -110,7 +113,7 @@ namespace OpenDEDHub
                     string instanceId = idBuilder.ToString();
 
                     // Match the root composite USB device (not the MI_00 child interface)
-                    if (instanceId.Contains(TargetVidPid, StringComparison.OrdinalIgnoreCase) &&
+                    if (instanceId.Contains(targetVidPid, StringComparison.OrdinalIgnoreCase) &&
                         !instanceId.Contains("&MI_", StringComparison.OrdinalIgnoreCase))
                     {
                         log($"Found target USB device: {instanceId}");
@@ -148,7 +151,7 @@ namespace OpenDEDHub
                     }
                 }
 
-                log($"USB Reset Warning: No device matching {TargetVidPid} found on USB bus.");
+                log($"USB Reset Warning: No device matching {targetVidPid} found on USB bus.");
                 return false;
             }
             finally

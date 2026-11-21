@@ -12,3 +12,6 @@ publish/
 
 # Third-party binaries (users supply their own copy)
 *.dll
+
+# Config
+config.ini
